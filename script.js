@@ -1,17 +1,5 @@
 var session = null
 
-document.addEventListener('DOMContentLoaded', function () {
-  var loadCastInterval = setInterval(function () {
-    if (chrome.cast.isAvailable) {
-      console.log('Cast has loaded.')
-      clearInterval(loadCastInterval)
-      initializeCastApi()
-    } else {
-      console.log('Unavailable')
-    }
-  }, 1000)
-})
-
 function initializeCastApi() {
   var applicationID = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
   var sessionRequest = new chrome.cast.SessionRequest(applicationID)
@@ -47,10 +35,6 @@ function onInitError() {
   console.log('Initialization failed')
 }
 
-document.querySelector('#cast-btn').addEventListener('click', function () {
-  launchApp()
-})
-
 function launchApp() {
   console.log('Launching the Chromecast App...')
   chrome.cast.requestSession(onRequestSessionSuccess, onLaunchError)
@@ -77,10 +61,9 @@ function loadMedia() {
     return
   }
 
-  var mediaInfo = new chrome.cast.media.MediaInfo(
-    // URL.createObjectURL('test.mp4')
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-  )
+  // const ourl = URL.createObjectURL('test.mp4')
+  const src = document.querySelector('#media-src').value
+  var mediaInfo = new chrome.cast.media.MediaInfo(src)
   mediaInfo.contentType = 'video/mp4'
 
   var request = new chrome.cast.media.LoadRequest(mediaInfo)
@@ -114,16 +97,19 @@ function onStopAppError() {
 }
 
 // ---------------------------------------------------------
-const fileForm = document.querySelector('#file-form')
-const videoEl = document.querySelector('#video-player')
-const videoSourceEl = document.querySelector('#video-source')
-
-// fileForm.addEventListener('change', handleFile)
-
-function handleFile(e) {
-  const files = e.target.files
-  const ourl = URL.createObjectURL(files[0])
-
-  videoSourceEl.src = ourl
-  videoEl.load()
+const handleSubmit = e => {
+  e.preventDefault()
+  var loadCastInterval = setInterval(function () {
+    if (chrome.cast.isAvailable) {
+      console.log('Cast has loaded.')
+      clearInterval(loadCastInterval)
+      initializeCastApi()
+    } else {
+      console.log('Unavailable')
+    }
+  }, 1000)
 }
+
+document.querySelector('#cast-btn').addEventListener('click', function () {
+  launchApp()
+})

@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Castify</title>
-    <link rel="stylesheet" href="style.css" />
-    <script
-      defer
-      src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"
-    ></script>
-    <script defer src="script.js"></script>
-  </head>
 
-  <body>
-    <google-cast-launcher
-      style="position: absolute; top: 0; right: 0"
-    ></google-cast-launcher>
+<head>
+  <meta charset="UTF-8" />
+  <title>Castify</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+  <script defer src="script.js"></script>
+</head>
 
-    <video controls id="video-player">
-      <source id="video-source" />
-      Your browser does not support HTML5 video.
-    </video>
+<body>
+  <form onsubmit="handleSubmit(event)">
+    <input id="media-src" style="width: 50vw;" type="text" name="input" autocomplete="off" placeholder="src" autofocus
+      value="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+    <input type="submit">
+  </form>
 
-    <br />
+  <br />
 
-    <form>
-      <input
-        type="file"
-        id="file"
-        accept="video/*"
-        onChange="handleFile(event)"
-      />
-    </form>
+  <button id="cast-btn">Cast</button>
+</body>
 
-    <hr />
-
-    <button id="cast-btn">Cast</button>
-  </body>
 </html>
