@@ -61,7 +61,6 @@ function loadMedia() {
     return
   }
 
-  // const ourl = URL.createObjectURL('test.mp4')
   const src = document.querySelector('#media-src').value
   var mediaInfo = new chrome.cast.media.MediaInfo(src)
   mediaInfo.contentType = 'video/mp4'
@@ -97,7 +96,7 @@ function onStopAppError() {
 }
 
 // ---------------------------------------------------------
-const handleSubmit = e => {
+const handleSubmit = (e) => {
   e.preventDefault()
   var loadCastInterval = setInterval(function () {
     if (chrome.cast.isAvailable) {
